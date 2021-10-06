@@ -1,12 +1,12 @@
 import { Leaves } from '../interfaces/utils/Leaves';
 import { WorkerFilter } from '../interfaces/WorkerFilter';
-import valueFromPath from './workerValueFromPath';
+import workerValueFromPath from './workerValueFromPath';
 
-const workerFilter = <T extends object = {}>([keys, array, ...values]: Parameters<WorkerFilter<T>>) => {
+const workerFilter = <T extends object = {}>([array, path, ...values]: Parameters<WorkerFilter<T>>) => {
   return array.filter((value: T) => {
     const entries = [];
-    if (keys) {
-      const valuesFromPathResult = valueFromPath([value, keys]);
+    if (path) {
+      const valuesFromPathResult = workerValueFromPath([value, path]);
       entries.push([...(Array.isArray(valuesFromPathResult) ? valuesFromPathResult : [valuesFromPathResult])]);
     } else {
       entries.push(value);
