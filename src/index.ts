@@ -28,11 +28,11 @@ export const workerValueFromPath = async <T extends object, R extends any>(
   ...params: Parameters<WorkerValueFromPath<T, R>>
 ) => {
   try {
-    return await workerPool.exec('workerValueFromPath', [params]);
+    return await workerPool.exec('workerValueFromPath', params);
   } catch (e) {
     return new Promise<ReturnType<WorkerValueFromPath<T, R>>>((resolve, reject) => {
       try {
-        resolve(_workerValueFromPath<T, R>(params));
+        resolve(_workerValueFromPath<T, R>(...params));
       } catch (e) {
         reject(e);
       }
@@ -42,11 +42,11 @@ export const workerValueFromPath = async <T extends object, R extends any>(
 
 export const workerContainsValue = async <T extends object>(...params: Parameters<WorkerContainsValue<T>>) => {
   try {
-    return await workerPool.exec('workerContainsValue', [params]);
+    return await workerPool.exec('workerContainsValue', params);
   } catch (e) {
     return new Promise<ReturnType<WorkerContainsValue<T>>>((resolve, reject) => {
       try {
-        resolve(_workerContainsValue<T>(params));
+        resolve(_workerContainsValue<T>(...params));
       } catch (e) {
         reject(e);
       }
@@ -56,11 +56,11 @@ export const workerContainsValue = async <T extends object>(...params: Parameter
 
 export const workerSort = async <T extends object>(...params: Parameters<WorkerSort<T>>) => {
   try {
-    return await workerPool.exec('workerSort', [params]);
+    return await workerPool.exec('workerSort', params);
   } catch (e) {
     return new Promise<ReturnType<WorkerSort<T>>>((resolve, reject) => {
       try {
-        resolve(_workerSort<T>(params));
+        resolve(_workerSort<T>(...params));
       } catch (e) {
         reject(e);
       }
@@ -70,11 +70,11 @@ export const workerSort = async <T extends object>(...params: Parameters<WorkerS
 
 export const workerFilter = async <T extends object>(...params: Parameters<WorkerFilter<T>>) => {
   try {
-    return await workerPool.exec('workerFilter', [params]);
+    return await workerPool.exec('workerFilter', params);
   } catch (e) {
     return new Promise<ReturnType<WorkerFilter<T>>>((resolve, reject) => {
       try {
-        resolve(_workerFilter<T>(params));
+        resolve(_workerFilter<T>(...params));
       } catch (e) {
         reject(e);
       }
@@ -84,11 +84,11 @@ export const workerFilter = async <T extends object>(...params: Parameters<Worke
 
 export const workerSearch = async <T extends object>(...params: Parameters<WorkerSearch<T>>) => {
   try {
-    return await workerPool.exec('workerSearch', [params]);
+    return await workerPool.exec('workerSearch', params);
   } catch (e) {
     return new Promise<ReturnType<WorkerSearch<T>>>((resolve, reject) => {
       try {
-        resolve(_workerSearch<T>(params));
+        resolve(_workerSearch<T>(...params));
       } catch (e) {
         reject(e);
       }

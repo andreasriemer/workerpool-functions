@@ -1,8 +1,9 @@
 import { WorkerValueFromPath } from '../interfaces';
 
-const workerValueFromPath = <T extends any, R extends any>([obj, path]: Parameters<WorkerValueFromPath<T, R>>):
-  | R
-  | Array<R> => {
+const workerValueFromPath = <T extends any, R extends any>(
+  ...params: Parameters<WorkerValueFromPath<T, R>>
+): R | Array<R> => {
+  const [obj, path] = params;
   return (path as Array<string>).reduce((previous: any, current, currentIndex, array) => {
     if (previous == null) {
       return previous;
@@ -10,7 +11,7 @@ const workerValueFromPath = <T extends any, R extends any>([obj, path]: Paramete
     if (previous[current] != null && typeof previous[current] === 'object' && Array.isArray(previous[current])) {
       const remainingPath = [...array].splice(currentIndex + 1);
       return previous[current].reduce((previousListValues: Array<any>, currentListValue: any) => {
-        const result = workerValueFromPath([currentListValue, remainingPath]);
+        const result = workerValueFromPath(currentListValue, remainingPath);
         const resultList = Array.isArray(result) ? result : [result];
         if (resultList.length) {
           previousListValues.push(...resultList.filter((e) => e != null));
@@ -25,7 +26,7 @@ const workerValueFromPath = <T extends any, R extends any>([obj, path]: Paramete
           previousListValues.push(currentListValue);
           return previousListValues;
         }
-        const result = workerValueFromPath([currentListValue, remainingPath]);
+        const result = workerValueFromPath(currentListValue, remainingPath);
         const resultList = Array.isArray(result) ? result : [result];
         if (resultList.length) {
           previousListValues.push(...resultList.filter((e) => e != null));

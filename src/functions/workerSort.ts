@@ -1,7 +1,8 @@
 import { Leaves } from '../interfaces/utils/Leaves';
 import { WorkerSort } from '../interfaces/WorkerSort';
 
-const workerSort = <T extends object = {}>([array, path, order]: Parameters<WorkerSort<T>>) => {
+const workerSort = <T extends object = {}>(...params: Parameters<WorkerSort<T>>) => {
+  const [array, path, order] = params;
   const descendingComparator = (a: T, b: T, keyList: Leaves<T, 3> | Array<string>): number => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let bProp = (keyList as Array<string>).reduce((p: any, c: string) => p[c], b);

@@ -1,9 +1,8 @@
 import escapeStringRegexp from 'escape-string-regexp';
 import { WorkerContainsValue } from '../interfaces';
 
-const workerContainsValue = <T extends Record<string, any>>([obj, search, excludedPaths]: Parameters<
-  WorkerContainsValue<T>
->): boolean => {
+const workerContainsValue = <T extends Record<string, any>>(...params: Parameters<WorkerContainsValue<T>>): boolean => {
+  const [obj, search, excludedPaths] = params;
   const searchRegExp = typeof search === 'string' ? new RegExp(escapeStringRegexp(search), 'i') : search;
   return Object.keys(obj).some((key) => {
     if (
@@ -15,7 +14,7 @@ const workerContainsValue = <T extends Record<string, any>>([obj, search, exclud
       return false;
     }
     return !!obj[key] && typeof obj[key] === 'object'
-      ? workerContainsValue([
+      ? workerContainsValue(
           obj[key],
           search,
           excludedPaths?.length
@@ -26,7 +25,7 @@ const workerContainsValue = <T extends Record<string, any>>([obj, search, exclud
                 return prev;
               }, [])
             : undefined,
-        ])
+        )
       : (!!obj[key]?.toString && searchRegExp.test(obj[key].toString())) || false;
   });
 };
