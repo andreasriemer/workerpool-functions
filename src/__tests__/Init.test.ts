@@ -1,0 +1,3 @@
+test('Workerpool - init', () => {
+  // TODO
+});
