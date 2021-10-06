@@ -25,7 +25,8 @@
   ],
   "keywords": [
     "workerpool",
-    "functions"
+    "functions",
+    "basics"
   ],
   "author": "Andreas Riemer",
   "license": "MIT",
